@@ -1,4 +1,14 @@
-<script setup></script>
+<script setup>
+import { getCreatAPI } from "@/apis/layout";
+import { onMounted } from "vue";
+const CreatAPI = async () => {
+  const res = await getCreatAPI();
+  console.log(res);
+};
+onMounted(() => {
+  CreatAPI();
+});
+</script>
 <template>
   <nav class="app-topnav">
     <div class="container">
