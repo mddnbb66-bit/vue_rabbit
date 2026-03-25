@@ -6,6 +6,11 @@ import { RouterView } from "vue-router";
   <!-- <el-button type="primary">Primargiy</el-button> -->
   <!-- //一级路由出口 -->
   <RouterView />
+  <div class="test">sdads</div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+.test {
+  color: $priceColor;
+}
+</style>
