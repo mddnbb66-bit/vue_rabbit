@@ -1,12 +1,15 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import { createApp } from "vue";
+import { createPinia } from "pinia";
 
-import App from './App.vue'
-import router from './router'
+import App from "./App.vue";
+import router from "./router";
+import { textget } from "./apis/textApi";
 
-const app = createApp(App)
+const app = createApp(App);
+//测试
 
-app.use(createPinia())
-app.use(router)
+textget().then((value) => console.log(value));
+app.use(createPinia());
+app.use(router);
 
-app.mount('#app')
+app.mount("#app");
