@@ -1,10 +1,12 @@
-<template>
-  <h1>首页</h1>
-  <RouterView />
-</template>
-
-<script setup lang="ts">
-import { RouterView } from "vue-router";
+<script setup>
+import LayoutNav from "./components/LayoutNav.vue";
+import LayoutHeader from "./components/LayoutHeader.vue";
+import LayoutFooter from "./components/LayoutFooter.vue";
 </script>
 
-<style></style>
+<template>
+  <LayoutNav />
+  <LayoutHeader />
+  <RouterView />
+  <LayoutFooter />
+</template>
