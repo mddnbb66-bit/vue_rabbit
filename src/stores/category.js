@@ -8,10 +8,10 @@ export const useCategoryStore = defineStore("Category", () => {
   let getList = ref([]);
   const CreatAPI = async () => {
     const res = await getCreatAPI();
-    console.log(res);
+    // console.log(res);
     getList.value = res.result;
     console.log(res.result);
   };
 
-  return { CreatAPI, getList };
+  return { CreatAPI, getList,useCategoryStore };
 });

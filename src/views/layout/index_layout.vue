@@ -6,7 +6,10 @@ import LayoutFixed from "./components/LayoutFixed.vue";
 import { useCategoryStore } from "@/stores/category";
 import { onMounted } from "vue";
 const Category = useCategoryStore();
-onMounted(() => Category.CreatAPI());
+onMounted(() => {
+  // console.log(Category)
+
+  return Category.CreatAPI()});
 </script>
 
 <template>
