@@ -1,5 +1,5 @@
 <template>
-  <h1>这是home页</h1>
+
   <div class="container">
   <HomeBanner/>
   <HomeCategory />
