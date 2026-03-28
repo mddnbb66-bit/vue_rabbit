@@ -5,21 +5,22 @@ export function getBannerAPI() {
   });
 }
 
-
-
-
-
 //新鲜好物API
 
-export function getNewAPI(){
+export function getNewAPI() {
   return httpInstane({
-    url: '/home/new'
-  }
-  )
+    url: "/home/new",
+  });
 }
 //人气推荐
-export function getHotAPI(){
+export function getHotAPI() {
   return httpInstane({
-    url:"/home/hot"
-  })
+    url: "/home/hot",
+  });
+}
+//商品界面
+export function getGoodsAPI() {
+  return httpInstane({
+    url: "home/goods",
+  });
 }

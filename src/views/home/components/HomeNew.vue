@@ -1,41 +1,32 @@
 <script setup>
-import { onMounted,ref } from 'vue';
-import Homepanel from './Homepanel.vue';
-import  {getNewAPI}  from '@/apis/banner';
-const newList =ref([])
-const NewAPI = async ()=>{
-  let res = await getNewAPI()
+import { onMounted, ref } from "vue";
+import HomePanel from "./HomePanel.vue";
+import { getNewAPI } from "@/apis/banner";
+const newList = ref([]);
+const NewAPI = async () => {
+  let res = await getNewAPI();
   // console.log('mdd',res.result[0].name)
-  newList.value = res.result
-}
-onMounted(()=> NewAPI())
+  newList.value = res.result;
+};
+onMounted(() => NewAPI());
 </script>
 
-<template>
-  <Homepanel title="新鲜好物" subTitle="好就是好">
+<template v-solt="New">
+  <HomePanel title="新鲜好物" subTitle="好就是好">
     <ul class="goods-list">
-    <li v-for="item in newList" :key="item.id">
-      <RouterLink to="/">
-        <img :src="item.picture" alt="" />
-        <p class="name">{{ item.name }}</p>
-        <p class="price">¥{{ item.price }}</p>
-      </RouterLink>
-    </li>
-  </ul>
-
-
-
-
-
-
-
-
-  </Homepanel>
+      <li v-for="item in newList" :key="item.id">
+        <RouterLink to="/">
+          <img :src="item.picture" alt="" />
+          <p class="name">{{ item.name }}</p>
+          <p class="price">¥{{ item.price }}</p>
+        </RouterLink>
+      </li>
+    </ul>
+  </HomePanel>
   <!-- 下面是插槽主体内容模版 -->
-
 </template>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .goods-list {
   display: flex;
   justify-content: space-between;
@@ -45,7 +36,7 @@ onMounted(()=> NewAPI())
     width: 306px;
     height: 406px;
     background: #f0f9f4;
-    transition: all .5s;
+    transition: all 0.5s;
 
     &:hover {
       transform: translate3d(0, -3px, 0);
