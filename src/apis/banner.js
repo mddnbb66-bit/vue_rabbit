@@ -17,3 +17,9 @@ export function getNewAPI(){
   }
   )
 }
+//人气推荐
+export function getHotAPI(){
+  return httpInstane({
+    url:"/home/hot"
+  })
+}
