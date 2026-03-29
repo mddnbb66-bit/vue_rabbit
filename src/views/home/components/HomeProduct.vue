@@ -2,7 +2,7 @@
 import HomePanel from "./HomePanel.vue";
 import { getGoodsAPI } from "@/apis/banner";
 import { onMounted, ref } from "vue";
-// 变量名也改回正确的 GoodsItem
+
 import GoodsItem from "./GoodsItem.vue";
 const goodsProduct = ref([]);
 const GoodsAPI = async () => {
