@@ -2,18 +2,23 @@
 import { getBannerAPI } from "@/apis/banner";
 import GoodsItem from "../home/components/GoodsItem.vue";
 import { getNavAPI } from "@/apis/banner";
-import { onBeforeMount, onMounted, ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import {  onMounted, ref, watch } from "vue";
+import { onBeforeRouteUpdate, useRoute } from "vue-router";
 const router = useRoute();
 const categoryData = ref({});
-const NavAPI = async () => {
-  const res = await getNavAPI(router.params.id);
+const NavAPI = async (id=router.params.id) => {
+  const res = await getNavAPI(id);
   categoryData.value = res.result;
   console.log("面包nav", categoryData.value);
 };
 
-watch(router, () => getNavAPI());
+// watch(router, () => getNavAPI());
 onMounted(() => NavAPI());
+//更新响应式
+onBeforeRouteUpdate((to)=>{
+  // console.log(` 路由变了`)
+  NavAPI(to.params.id)
+})
 //获取轮播图
 const bannerList = ref([]);
 

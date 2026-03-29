@@ -27,5 +27,8 @@ const router = createRouter({
     },
   ],
 });
-
+//前置路由守卫
+// router.beforeEach((to)=>{
+//   console.log(`路变`,to)
+// })
 export default router;
