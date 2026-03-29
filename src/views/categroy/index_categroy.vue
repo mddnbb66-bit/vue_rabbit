@@ -1,15 +1,15 @@
 <script setup>
 import { getBannerAPI } from "@/apis/banner";
-
+import GoodsItem from "../home/components/GoodsItem.vue";
 import { getNavAPI } from "@/apis/banner";
 import { onBeforeMount, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 const router = useRoute();
-const NavData = ref({});
+const categoryData = ref({});
 const NavAPI = async () => {
   const res = await getNavAPI(router.params.id);
-  NavData.value = res.result;
-  console.log("面包nav", NavData.value);
+  categoryData.value = res.result;
+  console.log("面包nav", categoryData.value);
 };
 
 watch(router, () => getNavAPI());
@@ -33,7 +33,7 @@ onMounted(() => getbanner());
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>{{ NavData.name }}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <!-- 轮播图 -->
@@ -43,6 +43,26 @@ onMounted(() => getbanner());
             <img :src="item.imgUrl" alt="" />
           </el-carousel-item>
         </el-carousel>
+      </div>
+      <!-- 分类数据 -->
+      <div class="sub-list">
+        <h3>全部分类</h3>
+        <ul>
+          <li v-for="i in categoryData.children" :key="i.id">
+            <RouterLink to="/">
+              <img :src="i.picture" />
+              <p>{{ i.name }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+      <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
+        <div class="head">
+          <h3>- {{ item.name }}-</h3>
+        </div>
+        <div class="body">
+          <GoodsItem v-for="good in item.goods" :goods="good" :key="good.id" />
+        </div>
       </div>
     </div>
   </div>

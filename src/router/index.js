@@ -12,7 +12,7 @@ const router = createRouter({
       component: layout,
       children: [
         {
-          path: "categroy/1005000",
+          path: "/",
           component: home,
         },
         {
