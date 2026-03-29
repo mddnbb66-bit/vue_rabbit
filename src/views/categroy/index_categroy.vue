@@ -1,4 +1,6 @@
 <script setup>
+import { getBannerAPI } from "@/apis/banner";
+
 import { getNavAPI } from "@/apis/banner";
 import { onBeforeMount, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
@@ -12,6 +14,16 @@ const NavAPI = async () => {
 
 watch(router, () => getNavAPI());
 onMounted(() => NavAPI());
+//获取轮播图
+const bannerList = ref([]);
+
+const getbanner = async () => {
+  const res = await getBannerAPI({ distributionSite: "2" });
+  console.log("dsdsdasd", res.result);
+  bannerList.value = res.result;
+};
+
+onMounted(() => getbanner());
 </script>
 
 <template>
@@ -23,6 +35,14 @@ onMounted(() => NavAPI());
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item>{{ NavData.name }}</el-breadcrumb-item>
         </el-breadcrumb>
+      </div>
+      <!-- 轮播图 -->
+      <div class="home-banner">
+        <el-carousel height="500px">
+          <el-carousel-item v-for="item in bannerList" :key="item.id">
+            <img :src="item.imgUrl" alt="" />
+          </el-carousel-item>
+        </el-carousel>
       </div>
     </div>
   </div>

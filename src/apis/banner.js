@@ -1,7 +1,11 @@
 import httpInstane from "@/utils/http";
-export function getBannerAPI() {
+export function getBannerAPI(params = {}) {
+  const { distributionSite = "1" } = params;
   return httpInstane({
     url: "/home/banner",
+    params: {
+      distributionSite,
+    },
   });
 }
 
