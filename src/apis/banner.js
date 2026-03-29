@@ -24,3 +24,12 @@ export function getGoodsAPI() {
     url: "home/goods",
   });
 }
+//面包屑导航
+export function getNavAPI(id) {
+  return httpInstane({
+    url: "/category/",
+    params: {
+      id,
+    },
+  });
+}
