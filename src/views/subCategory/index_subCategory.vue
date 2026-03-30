@@ -83,7 +83,7 @@ const load = async () => {
       </el-tabs>
       <!-- //商品列表 -->
       <el-scrollbar
-        height="800px"
+        height="1200px"
         @end-reached="load"
 
 
