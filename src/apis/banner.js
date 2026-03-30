@@ -37,3 +37,12 @@ export function getNavAPI(id) {
     },
   });
 }
+//2级路由
+export const getCategoryFilterAPI = (id)=>{
+  return  httpInstane({
+    url:'/category/sub/filter',
+    params:{
+      id
+    }
+  })
+}
