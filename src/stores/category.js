@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-
+// import  useCategoryStore  from "@/views/categroy/composables/usecategory";
 import { getCreatAPI } from "@/apis/layout";
 // import { onMounted } from "vue";
 //数据导航管理
@@ -13,5 +13,5 @@ export const useCategoryStore = defineStore("Category", () => {
     console.log(res.result);
   };
 
-  return { CreatAPI, getList,useCategoryStore };
+  return { CreatAPI, getList};
 });

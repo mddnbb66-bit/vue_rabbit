@@ -1,7 +1,7 @@
 <script setup>
-import {useCategoryStore} from '@/stores/category'
-const CategoryStore = useCategoryStore()
-console.log(CategoryStore.getList)
+import { useCategoryStore } from "@/stores/category";
+const CategoryStore = useCategoryStore();
+console.log(CategoryStore.getList);
 </script>
 
 <template>
@@ -9,13 +9,15 @@ console.log(CategoryStore.getList)
     <ul class="menu">
       <li v-for="item in CategoryStore.getList" :key="item.id">
         <RouterLink to="/">{{ item.name }}</RouterLink>
-        <RouterLink v-for="i in item.children.slice(0,2)" :key="i.id" to="/">{{ i.name }}</RouterLink>
+        <RouterLink v-for="i in item.children.slice(0, 2)" :key="i.id" to="/">{{
+          i.name
+        }}</RouterLink>
         <div class="layer">
           <h4>分类推荐 <small>根据您的购买或浏览记录推荐</small></h4>
           <ul>
             <li v-for="i in item.goods" :key="i.id">
-              <RouterLink to="/">
-                <img alt="" :src="i.pricture"/>
+              <RouterLink :to="`/categroy/sub/${id}`">
+                <img alt="" :src="i.pricture" />
                 <div class="info">
                   <p class="name ellipsis-2">
                     {{ i.name }}
@@ -32,7 +34,7 @@ console.log(CategoryStore.getList)
   </div>
 </template>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .home-category {
   width: 250px;
   height: 500px;
