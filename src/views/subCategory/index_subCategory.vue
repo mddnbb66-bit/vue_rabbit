@@ -60,7 +60,6 @@ const load = async () => {
     isloading.value = false;
   }
 };
-
 </script>
 
 <template>
@@ -82,12 +81,7 @@ const load = async () => {
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
       <!-- //商品列表 -->
-      <el-scrollbar
-        height="1200px"
-        @end-reached="load"
-
-
-      >
+      <el-scrollbar height="1200px" @end-reached="load">
         <div class="body">
           <GoodsItem v-for="goods in goodList" :goods="goods" :key="goods.id" />
         </div>

@@ -11,7 +11,7 @@ const NewAPI = async () => {
 onMounted(() => NewAPI());
 </script>
 
-<template v-solt="New">
+<template v-slot="New">
   <HomePanel title="新鲜好物" subTitle="好就是好">
     <ul class="goods-list">
       <li v-for="item in newList" :key="item.id">
