@@ -7,6 +7,7 @@ const HotAPI = async () => {
   const res = await getHotAPI();
   hotList.value = res.result;
 };
+
 onMounted(() => HotAPI());
 </script>
 
