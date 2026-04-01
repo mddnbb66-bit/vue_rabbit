@@ -1,4 +1,5 @@
 <script setup>
+import XtxSku from "@/components/XtxSku/index.vue";
 import imgView from "@/components/imgView/index_imgView.vue";
 import DetailHot from "./components/DetailHot.vue";
 import { getDetailAPI } from "@/apis/detail";
@@ -12,6 +13,10 @@ const getDetail = async () => {
   goods.value = res.result;
 };
 onMounted(() => getDetail());
+//sku
+function skuChange(value) {
+  console.log(value);
+}
 </script>
 <template>
   <!-- 商品详情 -->
@@ -83,7 +88,7 @@ onMounted(() => getDetail());
                 </dl>
               </div>
               <!-- sku组件 -->
-
+              <XtxSku :goods="goods" @change="skuChange" />
               <!-- 数据组件 -->
 
               <!-- 按钮组件 -->
