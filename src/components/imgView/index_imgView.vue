@@ -2,13 +2,20 @@
 import { ref, watch } from "vue";
 import { useMouseInElement } from "@vueuse/core";
 // 图片列表
-const imageList = [
-  "https://yanxuan-item.nosdn.127.net/d917c92e663c5ed0bb577c7ded73e4ec.png",
-  "https://yanxuan-item.nosdn.127.net/e801b9572f0b0c02a52952b01adab967.jpg",
-  "https://yanxuan-item.nosdn.127.net/b52c447ad472d51adbdde1a83f550ac2.jpg",
-  "https://yanxuan-item.nosdn.127.net/f93243224dc37674dfca5874fe089c60.jpg",
-  "https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg",
-];
+defineProps({
+  imageList: {
+    type: Array,
+    default: () => [],
+  },
+});
+// 死图
+// const imageList = [
+//   "https://yanxuan-item.nosdn.127.net/d917c92e663c5ed0bb577c7ded73e4ec.png",
+//   "https://yanxuan-item.nosdn.127.net/e801b9572f0b0c02a52952b01adab967.jpg",
+//   "https://yanxuan-item.nosdn.127.net/b52c447ad472d51adbdde1a83f550ac2.jpg",
+//   "https://yanxuan-item.nosdn.127.net/f93243224dc37674dfca5874fe089c60.jpg",
+//   "https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg",
+// ];
 //小图切换大图的效果
 const indexactive = ref(0);
 function qiehuan(i) {
@@ -19,9 +26,14 @@ function qiehuan(i) {
 const target = ref(null);
 const left = ref(0);
 const top = ref(0);
+const bigX = ref(0);
+const bigY = ref(0);
+
 // 有效范围计算
-const { elementX, elementY } = useMouseInElement(target);
-watch([elementX, elementY], () => {
+const { elementX, elementY, isOutside } = useMouseInElement(target);
+watch([elementX, elementY, isOutside], () => {
+  if (isOutside.value) return;
+
   //横向
   if (elementX.value > 100 && elementX.value < 300) {
     left.value = elementX.value - 100;
@@ -30,11 +42,17 @@ watch([elementX, elementY], () => {
     top.value = elementY.value - 100;
   }
   //边界
-  if (elementX.value > 300) left.value = 200;
-  if (elementX.value < 100) left.value = 0;
-  if (elementY.value < 100) top.value = 0;
-  if (elementY.value > 300) top.value = 200;
+  if (elementX.value >= 300) left.value = 200;
+  if (elementX.value <= 100) left.value = 0;
+  if (elementY.value <= 100) top.value = 0;
+  if (elementY.value >= 300) top.value = 200;
+  //右侧放大镜效果
+  bigX.value = -left.value * 2;
+  bigY.value = -top.value * 2;
 });
+
+// const bigX = computed(() => -left.value * 2);
+// const bigY = computed(() => -top.value * 2);
 </script>
 
 <template>
@@ -61,12 +79,12 @@ watch([elementX, elementY], () => {
       class="large"
       :style="[
         {
-          backgroundImage: `url(${imageList[0]})`,
-          backgroundPositionX: `0px`,
-          backgroundPositionY: `0px`,
+          backgroundImage: `url(${imageList[indexactive]})`,
+          backgroundPositionX: `${bigX}px`,
+          backgroundPositionY: `${bigY}px`,
         },
       ]"
-      v-show="false"
+      v-show="!isOutside"
     ></div>
   </div>
 </template>
