@@ -1,4 +1,4 @@
-import httpInstane from "@/utils/http";
+import { httpInstane } from "@/utils/http";
 //详情
 export function getDetailAPI(id) {
   return httpInstane({

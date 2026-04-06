@@ -1,4 +1,4 @@
-import httpInstane from "@/utils/http";
+import { httpInstane } from "@/utils/http";
 export function getBannerAPI(params = {}) {
   const { distributionSite = "1" } = params;
   return httpInstane({
@@ -38,14 +38,14 @@ export function getNavAPI(id) {
   });
 }
 //2级路由
-export const getCategoryFilterAPI = (id)=>{
-  return  httpInstane({
-    url:'/category/sub/filter',
-    params:{
-      id
-    }
-  })
-}
+export const getCategoryFilterAPI = (id) => {
+  return httpInstane({
+    url: "/category/sub/filter",
+    params: {
+      id,
+    },
+  });
+};
 //2级路由的商品详情API
 /**
  * @description: 获取导航数据
@@ -59,8 +59,8 @@ export const getCategoryFilterAPI = (id)=>{
  */
 export const getSubCategoryAPI = (data) => {
   return httpInstane({
-    url:'/category/goods/temporary',
-    method:'POST',
-    data
-  })
-}
+    url: "/category/goods/temporary",
+    method: "POST",
+    data,
+  });
+};

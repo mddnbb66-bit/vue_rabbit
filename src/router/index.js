@@ -34,6 +34,11 @@ const router = createRouter({
       path: "/login",
       component: Login,
     },
+    {
+      // 匹配所有乱七八糟的、找不到的路径
+      path: "/:pathMatch(.*)*",
+      redirect: "/login", // 强制把他踢回首页
+    },
   ],
   scrollBehavior() {
     return {

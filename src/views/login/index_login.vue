@@ -1,10 +1,16 @@
 <script setup>
-import { vLoading } from "element-plus";
 import { ref } from "vue";
+
+import { ElMessage } from "element-plus";
+import "element-plus/theme-chalk/el-message.css";
+import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
+//准备用户数据
+const UserStore = useUserStore();
 //准备表单对象
 const form = ref({
-  account: "",
-  password: "",
+  account: "xiaotuxian001",
+  password: "123456",
   agree: "",
 });
 //准备规则对象
@@ -12,7 +18,7 @@ const rules = {
   account: [{ required: true, message: "变量名不能为空", trigger: "blur" }],
   password: [
     { required: true, message: "密码不能为空", trigger: "blur" },
-    { min: 6, max: 14, message: "长度6-14个字符", trigger: "blur" },
+    { min: 6, max: 14, message: "c", trigger: "blur" },
   ],
   agree: [
     {
@@ -25,6 +31,22 @@ const rules = {
       },
     },
   ],
+};
+//统一效验
+const fromRef = ref(null);
+const router = useRouter();
+const doLogin = () => {
+  fromRef.value.validate(async (valid) => {
+    if (valid) {
+      //执行登录逻辑
+      await UserStore.getUserInfo(form.value);
+      //成功写的地方
+      //提示用户
+      ElMessage({ type: "success", message: "登录成功" });
+      //  跳转路由
+      router.replace("/");
+    }
+  });
 };
 </script>
 
@@ -55,6 +77,7 @@ const rules = {
               label-position="right"
               label-width="60px"
               status-icon
+              ref="fromRef"
             >
               <el-form-item prop="account" label="账户">
                 <el-input v-model="form.account" />
@@ -67,7 +90,7 @@ const rules = {
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn">点击登录</el-button>
+              <el-button size="large" class="subBtn" @click="doLogin">点击登录</el-button>
             </el-form>
           </div>
         </div>

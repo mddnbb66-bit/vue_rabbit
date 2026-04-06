@@ -1,12 +1,9 @@
 <script setup>
 import GoodsItem from "../home/components/GoodsItem.vue";
-// import { usecategory } from '@/views/category/composables/usecategory';
 import { usecategory } from "./composables/usecategory";
-import { usebanner }  from "./composables/usebanner";
+import { usebanner } from "./composables/usebanner";
 const { bannerList } = usebanner();
-// 必须得有这行代码把数据拿过来！
 const { categoryData } = usecategory();
-//获取轮播图
 </script>
 
 <template>

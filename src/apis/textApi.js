@@ -1,4 +1,4 @@
-import httpInstane from "@/utils/http";
+import { httpInstane } from "@/utils/http";
 
 export function textget() {
   return httpInstane({
