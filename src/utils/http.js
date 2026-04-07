@@ -3,7 +3,7 @@ import axios from "axios";
 import { useUserStore } from "@/stores/user";
 import { ElMessage } from "element-plus";
 import "element-plus/theme-chalk/el-message.css";
-import { storeToRefs } from "pinia";
+
 const request = axios.create({
   baseURL: "http://pcapi-xiaotuxian-front-devtest.itheima.net",
   timeout: 10000,

@@ -15,11 +15,14 @@ export const useUserStore = defineStore(
       console.log("dsd", res);
       userInfo.value = res.result;
     };
-
-    // ✅ 修复 1：左大括号必须和 return 在同一行！
+    //清除数据方法
+    const clearUserInfo = async () => {
+      userInfo.value = {};
+    };
     return {
       userInfo,
       getUserInfo,
+      clearUserInfo,
     };
   },
   {
