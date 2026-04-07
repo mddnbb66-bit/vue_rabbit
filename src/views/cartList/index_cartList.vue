@@ -2,14 +2,20 @@
 import { useCartStore } from "@/stores/cartStore";
 import { storeToRefs } from "pinia";
 const cartStore = useCartStore();
-const { cartList } = storeToRefs(cartStore);
+const { cartList, isAll } = storeToRefs(cartStore);
+//方法单独解构
 const { single } = cartStore;
+const { selectAll } = cartStore;
+
 //单选逻辑
 const singleCheck = (i, selected) => {
   //selected只是代表选中，不知道要搞哪个
   //仅凭借一个selectd还不知道要搞谁，所以要加个i
-  console.log(i, selected);
   single(i.skuId, selected);
+};
+//全选逻辑
+const quanxuan = (selected) => {
+  selectAll(selected);
 };
 </script>
 
@@ -21,7 +27,8 @@ const singleCheck = (i, selected) => {
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox />
+                <!-- 全选框 -->
+                <el-checkbox :model-value="isAll" @change="quanxuan" />
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>

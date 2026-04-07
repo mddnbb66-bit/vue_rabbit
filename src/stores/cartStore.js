@@ -34,12 +34,21 @@ export const useCartStore = defineStore(
     const priceCount = computed(() =>
       cartList.value.reduce((sum, c) => sum + c.count * c.price, 0),
     );
+    const isAll = computed(() => cartList.value.every((item) => item.selected === true));
     //单选逻辑
     const single = (skuId, selected) => {
       const item = cartList.value.find((item) => item.skuId === skuId);
-      item.selected = selected;
+      if (item) {
+        item.selected = selected;
+      }
+    };
+    //全选逻辑
+    const selectAll = (selected) => {
+      cartList.value.forEach((item) => (item.selected = selected));
     };
     return {
+      selectAll,
+      isAll,
       single,
       allCount,
       priceCount,
