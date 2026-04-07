@@ -1,6 +1,5 @@
 //购物车模块
 
-import { all } from "axios";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
