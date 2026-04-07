@@ -1,7 +1,8 @@
 //购物车模块
 
+import { all } from "axios";
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 export const useCartStore = defineStore(
   "cart",
@@ -28,7 +29,16 @@ export const useCartStore = defineStore(
       //fliter 留存
       cartList.value = cartList.value.filter((item) => item.skuId !== skuId);
     };
+    //统计计算
+    //计算属性
+    const allCount = computed(() => cartList.value.reduce((num, c) => num + c.count, 0));
+    const priceCount = computed(() =>
+      cartList.value.reduce((sum, c) => sum + c.count * c.price, 0),
+    );
+
     return {
+      allCount,
+      priceCount,
       cartList,
       addCart,
       delCart,
