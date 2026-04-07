@@ -2,7 +2,7 @@
 import { useCartStore } from "@/stores/cartStore";
 import { storeToRefs } from "pinia";
 const cartStore = useCartStore();
-const { cartList, isAll } = storeToRefs(cartStore);
+const { cartList, isAll, selectCount, selectPrice, allCount } = storeToRefs(cartStore);
 //方法单独解构
 const { single } = cartStore;
 const { selectAll } = cartStore;
@@ -96,8 +96,8 @@ const quanxuan = (selected) => {
       <!-- 操作栏 -->
       <div class="action">
         <div class="batch">
-          共 10 件商品，已选择 2 件，商品合计：
-          <span class="red">¥ 200.00 </span>
+          共 {{ allCount }}件商品，已选择 {{ selectCount }} 件，商品合计：
+          <span class="red">¥ {{ selectPrice }} </span>
         </div>
         <div class="total">
           <el-button size="large" type="primary">下单结算</el-button>

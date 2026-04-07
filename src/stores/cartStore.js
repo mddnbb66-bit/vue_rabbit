@@ -30,9 +30,19 @@ export const useCartStore = defineStore(
     };
     //统计计算
     //计算属性
+    // 小购物车图标里面的数据  需要单独显示
     const allCount = computed(() => cartList.value.reduce((num, c) => num + c.count, 0));
     const priceCount = computed(() =>
       cartList.value.reduce((sum, c) => sum + c.count * c.price, 0),
+    );
+    //结算界面里面的数据  需要单独显示
+    const selectCount = computed(() =>
+      cartList.value.filter((item) => item.selected === true)?.reduce((num, c) => num + c.count, 0),
+    );
+    const selectPrice = computed(() =>
+      cartList.value
+        .filter((item) => item.selected === true)
+        ?.reduce((sum, c) => sum + c.count * c.price, 0),
     );
     const isAll = computed(() => cartList.value.every((item) => item.selected === true));
     //单选逻辑
@@ -52,6 +62,8 @@ export const useCartStore = defineStore(
       single,
       allCount,
       priceCount,
+      selectCount,
+      selectPrice,
       cartList,
       addCart,
       delCart,
