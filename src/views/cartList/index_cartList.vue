@@ -3,6 +3,14 @@ import { useCartStore } from "@/stores/cartStore";
 import { storeToRefs } from "pinia";
 const cartStore = useCartStore();
 const { cartList } = storeToRefs(cartStore);
+const { single } = cartStore;
+//单选逻辑
+const singleCheck = (i, selected) => {
+  //selected只是代表选中，不知道要搞哪个
+  //仅凭借一个selectd还不知道要搞谁，所以要加个i
+  console.log(i, selected);
+  single(i.skuId, selected);
+};
 </script>
 
 <template>
@@ -26,7 +34,11 @@ const { cartList } = storeToRefs(cartStore);
           <tbody>
             <tr v-for="i in cartList" :key="i.id">
               <td>
-                <el-checkbox />
+                <!-- 单选框 -->
+                <el-checkbox
+                  :model-value="i.selected"
+                  @change="(selected) => singleCheck(i, selected)"
+                />
               </td>
               <td>
                 <div class="goods">

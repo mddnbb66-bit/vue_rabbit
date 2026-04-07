@@ -34,8 +34,13 @@ export const useCartStore = defineStore(
     const priceCount = computed(() =>
       cartList.value.reduce((sum, c) => sum + c.count * c.price, 0),
     );
-
+    //单选逻辑
+    const single = (skuId, selected) => {
+      const item = cartList.value.find((item) => item.skuId === skuId);
+      item.selected = selected;
+    };
     return {
+      single,
       allCount,
       priceCount,
       cartList,
