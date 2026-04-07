@@ -8,8 +8,7 @@ export const useCartStore = defineStore(
   () => {
     //定义state
     const cartList = ref([]);
-    //定义方法
-    //1,添加
+    //1,添加购物车
     //如果有count就+1，没有就push一下
     const addCart = (goods) => {
       // / 思路: 通过匹配传递过来的商品对象中的skuId能不能在cartList中找到, item是老的
@@ -21,9 +20,18 @@ export const useCartStore = defineStore(
         cartList.value.push(goods);
       }
     };
+    //2，删除购物车
+    const delCart = (skuId) => {
+      //splice删除
+      // const ind = cartList.value.findIndex((item) => (item.skuId === skuId));
+      // cartList.value.splice(ind, 1);
+      //fliter 留存
+      cartList.value = cartList.value.filter((item) => item.skuId !== skuId);
+    };
     return {
       cartList,
       addCart,
+      delCart,
     };
   },
   {
