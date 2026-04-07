@@ -3,6 +3,7 @@ import axios from "axios";
 import { useUserStore } from "@/stores/user";
 import { ElMessage } from "element-plus";
 import "element-plus/theme-chalk/el-message.css";
+import router from "@/router";
 
 const request = axios.create({
   baseURL: "http://pcapi-xiaotuxian-front-devtest.itheima.net",
@@ -35,6 +36,14 @@ function fengzhuang(http) {
         type: "warning",
         message: e.response.data.message,
       });
+      // token 失效处理
+      const userStore = useUserStore();
+      if (e.response.status === 401) {
+        //清除用户数据
+        userStore.clearUserInfo();
+        // 跳转登录
+        router.push("/login");
+      }
       return Promise.reject(e);
     },
   );
