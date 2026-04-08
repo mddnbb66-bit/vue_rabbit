@@ -18,3 +18,15 @@ export const findNewCartAPI = ()=>{
     url:'/member/cart'
   })
 }
+//删除购物车
+export const deleteCartAPI = (ids)=>{
+  return httpInstane(
+    {
+    url:'/member/cart',
+    method:'DELETE',
+    data:{
+      ids
+    }
+    }
+  )
+}

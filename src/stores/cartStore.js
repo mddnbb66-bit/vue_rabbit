@@ -3,7 +3,9 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { useUserStore } from "./user";
-import { findNewCartAPI,insertCartAPI } from "@/apis/cart";
+import { findNewCartAPI,insertCartAPI,deleteCartAPI } from "@/apis/cart";
+//引入hook
+import { useNewList } from "@/hook/useNewList";
 export const useCartStore = defineStore(
   "cart",
   () => {
@@ -11,6 +13,8 @@ export const useCartStore = defineStore(
     const userStore = useUserStore()
     const isLogin = computed(()=>userStore.userInfo.token)
     const cartList = ref([]);
+    //引入通用拉去新列表的方法
+    const {upDateList} = useNewList()
     //1,添加购物车
     //如果有count就+1，没有就push一下
     const addCart = async (goods) => {
@@ -20,10 +24,7 @@ export const useCartStore = defineStore(
         //接口购物车逻辑
         //1，给后端传种类和数量，然后后端自己加，看那1不到，反正返回和并之后的值
         await insertCartAPI({skuId,count})
-        //2.拉下来最新的列表
-        const res = await findNewCartAPI()
-        //3.用新的覆盖旧的
-        cartList.value = res.result
+        await upDateList(cartList)
       }}
       else{
           // / 思路: 通过匹配传递过来的商品对象中的skuId能不能在cartList中找到, item是老的
@@ -39,12 +40,18 @@ export const useCartStore = defineStore(
 
     };
     //2，删除购物车
-    const delCart = (skuId) => {
+    const delCart = async(skuId) => {
+      if(isLogin.value){
+        //接口购物车的删除
+        await deleteCartAPI([skuId])
+        await upDateList(cartList)
+      }else{
       //splice删除
       // const ind = cartList.value.findIndex((item) => (item.skuId === skuId));
       // cartList.value.splice(ind, 1);
       //fliter 留存
       cartList.value = cartList.value.filter((item) => item.skuId !== skuId);
+      }
     };
     //统计计算
     //计算属性
