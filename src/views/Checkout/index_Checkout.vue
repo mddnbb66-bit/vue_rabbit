@@ -17,7 +17,18 @@ let show = ref(false)
 const showDig = ()=>{
   show.value = !show.value
 }
-
+//切换地址设置
+const activeAddress = ref({})
+const switchAddress = (item)=>{
+  activeAddress.value = item
+}
+const quding = ()=>{
+  curAddress.value = activeAddress.value
+  showDig()
+}
+const quxiao = ()=>{
+  showDig()
+}
 </script>
 
 <template>
@@ -29,7 +40,7 @@ const showDig = ()=>{
         <div class="box-body">
           <div class="address">
             <div class="text">
-              <div class="none" v-if="!curAddress">您需要先添加收货地址才可提交订单。</div>
+              <div class="none"  v-if="!curAddress">您需要先添加收货地址才可提交订单。</div>
               <ul v-else>
                 <li><span>收<i />货<i />人：</span>{{ curAddress.receiver }}</li>
                 <li><span>联系方式：</span>{{ curAddress.contact }}</li>
@@ -118,9 +129,9 @@ const showDig = ()=>{
     </div>
   </div>
   <!-- 切换地址 -->、
-  <el-dialog   v-model="show"      title="切换收货地址" width="30%" center>
+  <el-dialog   v-model="show"  title="切换收货地址" width="30%" center>
   <div class="addressWrapper">
-    <div class="text item" v-for="item in checkInfo.userAddresses"  :key="item.id">
+    <div class="text item" :class="{active:activeAddress.id===item.id}" @click="switchAddress(item)"  v-for="item in checkInfo.userAddresses"   :key="item.id">
       <ul>
       <li><span>收<i />货<i />人：</span>{{ item.receiver }} </li>
       <li><span>联系方式：</span>{{ item.contact }}</li>
@@ -130,8 +141,8 @@ const showDig = ()=>{
   </div>
   <template #footer>
     <span class="dialog-footer">
-      <el-button>取消</el-button>
-      <el-button type="primary">确定</el-button>
+      <el-button @click="quxiao">取消</el-button>
+      <el-button type="primary" @click="quding">确定</el-button>
     </span>
   </template>
 </el-dialog>
