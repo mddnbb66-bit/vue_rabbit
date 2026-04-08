@@ -1,8 +1,17 @@
 <script setup>
 import { getCheckInfoAPI } from '@/apis/checkout';
 import { onMounted, ref } from 'vue';
+import { createOrderAPI } from '@/apis/checkout';
+import { useRouter } from 'vue-router';
+import { useNewList } from '@/hook/useNewList';
+import { useCartStore } from '@/stores/cartStore';
+import { storeToRefs } from 'pinia';
+const cartStore = useCartStore()
+const {upDateList} = useNewList()
+const router = useRouter()
 const checkInfo = ref({})  // 订单对象
 const curAddress = ref({})// 地址对象
+const { cartList } = storeToRefs(cartStore)
 const getCheckInfo = async ()=>{
   const res = await getCheckInfoAPI()
   //渲染订单对象
@@ -28,6 +37,35 @@ const quding = ()=>{
 }
 const quxiao = ()=>{
   showDig()
+}
+//去往結算界面
+const createOrder = async () => {
+  const res = await createOrderAPI({
+    deliveryTimeType: 1,
+    payType: 1,
+    payChannel: 1,
+    buyerMessage: '',
+    goods: checkInfo.value.goods.map(item => {
+      return {
+        skuId: item.skuId,
+        count: item.count
+      }
+    }),
+    addressId : curAddress.value.id
+  })
+  // 先更新購物車
+
+   await upDateList(cartList)
+  const orderId = res.result.id
+  // 再跳转
+  router.push({
+    path:'pay',
+    query:{
+      id:orderId
+    }
+  })
+
+
 }
 </script>
 
@@ -123,7 +161,7 @@ const quxiao = ()=>{
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <el-button type="primary" size="large" >提交订单</el-button>
+          <el-button type="primary" size="large" @click="createOrder">提交订单</el-button>
         </div>
       </div>
     </div>

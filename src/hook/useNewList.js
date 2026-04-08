@@ -1,4 +1,4 @@
-import { findNewCartAPI,insertCartAPI,deleteCartAPI } from "@/apis/cart";
+import { findNewCartAPI,} from "@/apis/cart";
 
 export const useNewList =()=>{
   const upDateList = async(cartList)=>{
