@@ -2,22 +2,28 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { loginAPI } from "@/apis/user";
+import { useCartStore } from "./cartStore";
+
 
 export const useUserStore = defineStore(
   "user",
   () => {
     // 定义用户数据
     const userInfo = ref({});
-
     // 定义获取接口的数据action
     const getUserInfo = async ({ account, password }) => {
       const res = await loginAPI({ account, password });
-      console.log("dsd", res);
+
       userInfo.value = res.result;
+            //合并购物车
+    const cartStore = useCartStore()
+    cartStore.hebingCart()
     };
     //清除数据方法
     const clearUserInfo = async () => {
+      const cartStore = useCartStore()
       userInfo.value = {};
+      cartStore.cleCart()
     };
     return {
       userInfo,

@@ -30,3 +30,11 @@ export const deleteCartAPI = (ids)=>{
     }
   )
 }
+//合并购物车
+export const hebingCartAPI = (data)=>{
+  return httpInstane({
+    url:"/member/cart/merge",
+    method:"POST",
+    data
+  })
+}

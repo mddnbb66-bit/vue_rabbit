@@ -100,7 +100,7 @@ const quanxuan = (selected) => {
           <span class="red">¥ {{ selectPrice }} </span>
         </div>
         <div class="total">
-          <el-button size="large" type="primary">下单结算</el-button>
+          <el-button size="large" type="primary" @click="$router.push('/Checkout')">下单结算</el-button>
         </div>
       </div>
     </div>

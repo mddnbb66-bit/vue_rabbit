@@ -1,9 +1,9 @@
 //购物车模块
-
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { useUserStore } from "./user";
-import { findNewCartAPI,insertCartAPI,deleteCartAPI } from "@/apis/cart";
+import { insertCartAPI,deleteCartAPI } from "@/apis/cart";
+import { hebingCartAPI } from "@/apis/cart";
 //引入hook
 import { useNewList } from "@/hook/useNewList";
 export const useCartStore = defineStore(
@@ -53,6 +53,21 @@ export const useCartStore = defineStore(
       cartList.value = cartList.value.filter((item) => item.skuId !== skuId);
       }
     };
+    //3,清空购物车
+    const cleCart = ()=>{
+      cartList.value = []
+    }
+    //合并购物车
+    const hebingCart = async()=>{
+      await hebingCartAPI(cartList.value.map(item=>{
+        return {
+          skuId:item.skuId,
+          selected:item.selected,
+          count:item.count
+        }
+      }))
+      await upDateList(cartList)
+    }
     //统计计算
     //计算属性
     // 小购物车图标里面的数据  需要单独显示
@@ -82,6 +97,7 @@ export const useCartStore = defineStore(
       cartList.value.forEach((item) => (item.selected = selected));
     };
     return {
+      hebingCart,
       selectAll,
       isAll,
       single,
@@ -92,6 +108,7 @@ export const useCartStore = defineStore(
       cartList,
       addCart,
       delCart,
+      cleCart,
     };
   },
   {
