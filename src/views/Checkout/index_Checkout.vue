@@ -54,7 +54,6 @@ const createOrder = async () => {
     addressId : curAddress.value.id
   })
   // 先更新購物車
-
    await upDateList(cartList)
   const orderId = res.result.id
   // 再跳转
@@ -64,8 +63,6 @@ const createOrder = async () => {
       id:orderId
     }
   })
-
-
 }
 </script>
 

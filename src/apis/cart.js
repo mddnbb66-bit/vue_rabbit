@@ -38,3 +38,20 @@ export const hebingCartAPI = (data)=>{
     data
   })
 }
+// 修改购物车商品状态 (单选/修改数量)
+export const updateCartAPI = (skuId, data) => {
+  return httpInstane({
+    url: `/member/cart/${skuId}`,
+    method: 'PUT',
+    data
+  })
+}
+
+// 全选/取消全选购物车商品
+export const checkAllCartAPI = (data) => {
+  return httpInstane({
+    url: '/member/cart/selected',
+    method: 'PUT',
+    data
+  })
+}

@@ -2,16 +2,16 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { useUserStore } from "./user";
-import { insertCartAPI,deleteCartAPI } from "@/apis/cart";
-import { hebingCartAPI } from "@/apis/cart";
+
+import { insertCartAPI, deleteCartAPI, hebingCartAPI, updateCartAPI, checkAllCartAPI } from "@/apis/cart";
+
 //引入hook
 import { useNewList } from "@/hook/useNewList";
 export const useCartStore = defineStore(
   "cart",
   () => {
     //定义state
-    const userStore = useUserStore()
-    const isLogin = computed(()=>userStore.userInfo.token)
+    const isLogin = computed(()=>useUserStore().userInfo?.token)
     const cartList = ref([]);
     //引入通用拉去新列表的方法
     const {upDateList} = useNewList()
@@ -19,13 +19,13 @@ export const useCartStore = defineStore(
     //如果有count就+1，没有就push一下
     const addCart = async (goods) => {
       goods.count = Number(goods.count);
-      if(isLogin.value){{
+      if(isLogin.value){
         const {skuId,count} = goods
         //接口购物车逻辑
         //1，给后端传种类和数量，然后后端自己加，看那1不到，反正返回和并之后的值
         await insertCartAPI({skuId,count})
         await upDateList(cartList)
-      }}
+      }
       else{
           // / 思路: 通过匹配传递过来的商品对象中的skuId能不能在cartList中找到, item是老的
       // goods 是你从外面传进来的固定目标（你点击添加购物车时），而 item 是 find 内部自己生成的轮询替身（购物车里原有的商品）
@@ -33,7 +33,7 @@ export const useCartStore = defineStore(
       if (item) {
         item.count += goods.count;
       } else {
-        goods.count = goods.count;
+
         cartList.value.push(goods);
       }
       }
@@ -86,15 +86,24 @@ export const useCartStore = defineStore(
     );
     const isAll = computed(() => cartList.value.every((item) => item.selected === true));
     //单选逻辑
-    const single = (skuId, selected) => {
+    const single = async (skuId, selected) => {
       const item = cartList.value.find((item) => item.skuId === skuId);
       if (item) {
         item.selected = selected;
       }
+      if(isLogin.value){
+        await updateCartAPI(skuId, { selected });
+      }
     };
     //全选逻辑
-    const selectAll = (selected) => {
+    const selectAll = async (selected) => {
       cartList.value.forEach((item) => (item.selected = selected));
+      if(isLogin.value){
+        await checkAllCartAPI({
+          selected,
+          ids: cartList.value.map(item => item.skuId)
+        });
+      }
     };
     return {
       hebingCart,
