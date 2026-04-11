@@ -11,6 +11,18 @@ const tabTypes = [
   { name: "complete", label: "已完成" },
   { name: "cancel", label: "已取消" }
 ]
+//键值对应列表
+const formatPay = (state)=>{
+  const hsmap = {
+    1: '待付款',
+2: '待发货',
+3: '待收货',
+4: '待评价',
+5: '已完成',
+6: '已取消'
+  }
+  return hsmap[state]
+}
 // 订单列表
 const orderList = ref([])
 const params = ref({
@@ -82,7 +94,7 @@ onMounted(()=>getUserOrder())
                 </ul>
               </div>
               <div class="column state">
-                <p>{{ order.orderState }}</p>
+                <p>{{ formatPay(order.orderState)}}</p>
                 <p v-if="order.orderState === 3">
                   <a href="javascript:;" class="green">查看物流</a>
                 </p>
