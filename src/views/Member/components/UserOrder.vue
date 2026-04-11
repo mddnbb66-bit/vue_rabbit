@@ -20,17 +20,24 @@ const params = ref({
 })
 const getUserOrder =async ()=>{
   const res = await getUserOrderAPI(params.value)
+    total.value = res.result.counts
   orderList.value = res.result.items
-  console.log('sdsa',orderList)
 }
+// table切换
+const total = ref(0)
+const tabChange = (type)=>{
+  params.value.orderState = type
+  getUserOrder()
+}
+
 onMounted(()=>getUserOrder())
 </script>
 
 <template>
   <div class="order-container">
-    <el-tabs>
+    <el-tabs   @tab-change="tabChange">
       <!-- tab切换 -->
-      <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label" />
+      <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label"  />
 
       <div class="main-container">
         <div class="holder-container" v-if="orderList.length === 0">
@@ -106,7 +113,14 @@ onMounted(()=>getUserOrder())
           </div>
           <!-- 分页 -->
           <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next" />
+            <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="total"
+      v-model:current-page="params.page"
+      v-model:page-size="params.pageSize"
+      @current-change="pageChange"
+/>
           </div>
         </div>
       </div>
