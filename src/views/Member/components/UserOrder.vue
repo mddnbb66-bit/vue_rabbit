@@ -16,20 +16,26 @@ const orderList = ref([])
 const params = ref({
     orderState: 0,
     page: 1,
-    pageSize: 2
+    pageSize: 10
 })
 const getUserOrder =async ()=>{
   const res = await getUserOrderAPI(params.value)
-    total.value = res.result.counts
+  total.value = res.result.counts
   orderList.value = res.result.items
 }
 // table切换
 const total = ref(0)
 const tabChange = (type)=>{
+
   params.value.orderState = type
   getUserOrder()
 }
-
+//分页切换
+const pageChange = (newPage) => {
+  // 拿着最新的页码，去向后端重新要数据！
+  params.value.page = newPage
+  getUserOrder()
+}
 onMounted(()=>getUserOrder())
 </script>
 

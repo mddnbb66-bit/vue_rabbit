@@ -11,7 +11,7 @@ const request = axios.create({
 });
 const httpInstane = axios.create({
   baseURL: "http://pcapi-xiaotuxian-front-devtest.itheima.net",
-  timeout: 10000,
+  timeout: 100000,
 });
 
 function fengzhuang(http) {
@@ -32,13 +32,10 @@ function fengzhuang(http) {
     (res) => res.data,
     (e) => {
       // 统一错误提示
-      ElMessage({
-        type: "warning",
-        message: e.response.data.message,
-      });
+ ElMessage.warning(e.response?.data?.message || '网络请求失败，请稍后再试')
       // token 失效处理
       const userStore = useUserStore();
-      if (e.response.status === 401) {
+      if (e.response?.status === 401) {
         //清除用户数据
         userStore.clearUserInfo();
         // 跳转登录
