@@ -1,17 +1,21 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted,  } from "vue";
 import HomePanel from "./HomePanel.vue";
-import { getNewAPI } from "@/apis/banner";
-const newList = ref([]);
-const NewAPI = async () => {
-  let res = await getNewAPI();
-  // console.log('mdd',res.result[0].name)
-  newList.value = res.result;
-};
-onMounted(() => NewAPI());
+import { useHotStore } from "@/stores/hotStore";
+import { storeToRefs } from "pinia";
+const hotStore = useHotStore()
+const {newList} = storeToRefs(hotStore)
+// const NewAPI = async () => {
+//   let res = await getNewAPI();
+//   // console.log('mdd',res.result[0].name)
+//   newList.value = res.result;
+//   console.log(`new`,newList.value)
+// };
+onMounted(() => hotStore.NewAPI());
 </script>
 
-<template v-slot="New">
+<template >
+    <!-- 下面是插槽主体内容模版 -->
   <HomePanel title="新鲜好物" subTitle="好就是好">
     <ul class="goods-list">
       <li v-for="item in newList" :key="item.id">
@@ -23,7 +27,7 @@ onMounted(() => NewAPI());
       </li>
     </ul>
   </HomePanel>
-  <!-- 下面是插槽主体内容模版 -->
+
 </template>
 
 <style scoped lang="scss">

@@ -17,6 +17,9 @@ export function getNewAPI() {
   });
 }
 //人气推荐
+// export const getHotAPI = () => {
+//   return  httpInstane('home/hot', 'get', {})
+// }
 export function getHotAPI() {
   return httpInstane({
     url: "/home/hot",

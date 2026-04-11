@@ -49,7 +49,7 @@ const load = async () => {
   }
   isloading.value = true; //上锁
   reqData.value.page++;
-  console.log("🔥 触发了 end-reached！");
+
   try {
     const res = await getSubCategoryAPI(reqData.value);
     if (res.result.items.length === 0) {

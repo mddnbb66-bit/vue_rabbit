@@ -2,10 +2,23 @@
 import { getHotAPI } from "@/apis/banner";
 import { onMounted, ref } from "vue";
 import HomePanel from "./HomePanel.vue";
+
+
+
+
+
+
+
+
+
+
+
 let hotList = ref([]);
 const HotAPI = async () => {
   const res = await getHotAPI();
   hotList.value = res.result;
+  console.log(`hot`,hotList.value)
+
 };
 
 onMounted(() => HotAPI());
@@ -15,7 +28,7 @@ onMounted(() => HotAPI());
   <HomePanel title="人气推荐" sub-title="人气爆款 不容错过">
     <ul class="goods-list">
       <li v-for="item in hotList" :key="item.id">
-        <RouterLink :to="`/detail/${item.id}`">
+        <RouterLink to="/detail/1369155859933827074">
           <img v-img-lazy="item.picture" alt="" />
           <p class="name">{{ item.title }}</p>
           <p class="desc">{{ item.alt }}</p>
