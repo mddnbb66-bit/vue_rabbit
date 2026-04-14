@@ -5,7 +5,7 @@
 ![Pinia](https://img.shields.io/badge/Pinia-2.X-FFE16B?style=flat-square&logo=pinia)
 ![Element Plus](https://img.shields.io/badge/Element_Plus-2.X-409EFF?style=flat-square&logo=element-plus)
 
-> 💡 **在线预览体验：** [点击访问在线项目](https://你的netlify域名.netlify.app) 
+> 💡 **在线预览体验：** [点击访问在线项目](https://mddxiaotuxian.shop) 
 
 ## 📖 项目描述
 
@@ -29,7 +29,7 @@
 
 ```bash
 # 1. 克隆项目到本地
-git clone [https://github.com/你的用户名/你的仓库名.git](https://github.com/你的用户名/你的仓库名.git)
+git clone https://github.com/mddnbb66-bit/vue_rabbit.git
 
 # 2. 进入项目目录
 cd 你的仓库名
